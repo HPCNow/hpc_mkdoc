@@ -1,0 +1,27 @@
+site_name: OHSU - Advance Computing Center
+theme:
+  name: material
+  features:
+    - toc.integrate
+    - navigation.expand
+nav:
+  - Home: home.md     
+  - Exacloud Platform:
+    - What is Exacloud?: exacloud/00-exacloud.md 
+    - Basic Access: exacloud/01-basic-access.md
+    - FAQ: exacloud/02-exacloud-FAQ.md
+    - Policy: exacloud/03-excloud-Policy.md
+    - Exacloud User Guie:
+      - Introduction: exacloud/04-exacloud-Introduction.md
+      - Job Scheduler: exacloud/05-exacloud-Job-Scheduler.md
+      - Parallel Computation: exacloud/05-Parallel-Computation.md
+    
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true  
+  - attr_list
+  - md_in_html
