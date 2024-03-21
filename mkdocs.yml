@@ -1,11 +1,13 @@
 site_name: OHSU - Advance Computing Center
 theme:
   name: material
+  pelette:
+    primary: green
   features:
-    - toc.integrate
+#    - toc.integrate
     - navigation.expand
 nav:
-  - Home: home.md     
+  - Home: index.md     
   - Exacloud Platform:
     - What is Exacloud?: exacloud/00-exacloud.md 
     - Basic Access: exacloud/01-basic-access.md
@@ -16,7 +18,6 @@ nav:
       - Job Scheduler: exacloud/05-exacloud-Job-Scheduler.md
       - Parallel Computation: exacloud/05-Parallel-Computation.md
     
-
 markdown_extensions:
   - admonition
   - pymdownx.details
@@ -25,3 +26,6 @@ markdown_extensions:
       alternate_style: true  
   - attr_list
   - md_in_html
+
+plugins:
+  - macros

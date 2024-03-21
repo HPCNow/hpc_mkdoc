@@ -21,7 +21,6 @@ srun /path/to/your/application --threads=8z
 The scheduler constrains your job's threads to the number of CPU cores you request, so starting more threads than the number of requested CPUs will not result in any faster computation. In fact, it will cause the application to slow down due to the overhead of over-subscribing the CPUs. Sometimes an application may support threads but not offer a configuration option for controlling them. In most cases, such an application will set the number of threads to the number of CPU cores detected on the node where it is running. If that is the case, it is best to submit the job using the slurm **--exclusive** flag, which will ensure that the job is the only one running on a given node.
 
 ### Message Passing
-
 Message passing is a technique that allows multiple application processes to be started, and then for data to be shared between them using a defined protocol. Since this message passing protocol can run over a network, it allows for jobs to scale beyond the resource constraints of a single node. A message passing library must be used by your application's developers to enable this option.
 
 The most prominent message passing system is [MPI](https://www.mpi-forum.org/docs/), though there are others like [OpenMP](https://www.openmp.org/). With an MPI application, you specify the number of concurrent tasks with the **-n** or **--ntasks** option. For example, to start a job with 80 concurrent worker processes:
@@ -78,12 +77,12 @@ Or if your script takes a sequence of integer inputs:
 ```
 $ for id in $(seq 1 505); do echo sbatch yourscript.sh $id; done
 ```
-**NOTE: **In the above examples, I have included an **echo** command so that the commands which would be run would be printed first. After running that and checking it for sanity, remove the **echo** to have it run for real.
+!!! note
+    In the above examples, I have included an **echo** command so that the commands which would be run would be printed first. After running that and checking it for sanity, remove the **echo** to have it run for real.
 
 If the parallel work requires more complex orchestration than the above, see below for some techniques.
 
 #### Multiple Submissions with Dependencies
-
 
 As mentioned above, you can always just submit multiple sbatch jobs independently. But suppose that your workflow has some tasks which need to be run serially after other parallel tasks have completed. You could simple watch the queue and wait to submit the next job until after the prior required jobs complete, but this is not an efficient use of your time or the cluster. Fortunately the scheduler has a dependency system which allows many jobs to be submitted at once, but to only run when certain conditions are met.
 
@@ -95,7 +94,6 @@ See the [sbatch documentation](https://slurm.schedmd.com/sbatch.html) for more
 The above example illustrates the concept, but would not be particularly useful in practice because it would require a lot of tedious manual submission of jobs. It is possible to create systems for submitting dependency-based pipelines by storing the JobIDs of previous submissions. The Biowulf project at NIH provides some suggestions for [building pipelines using slurm dependencies](https://hpc.nih.gov/docs/job_dependencies.html). There is also [the sdag tool](https://github.com/abdulrahmanazab/sdag) which allows defining job dependencies in a directed acyclic graph data structure. You can make your system as simple or as complicated as it needs to be.
 
 #### Shell Background Jobs
-
 
 The logon shell you use when connecting to Exacloud has the capability to start processes and then put them into the background. The background processes, called jobs, continue to run while the shell can be used for other tasks. In the context of cluster scheduling, this can allow you to start several tasks all at the same time within the same submission on the same node. This option may be right for you if you need a basic level of parallel orchestration, but don't require the complexity of the dependency system.
 
