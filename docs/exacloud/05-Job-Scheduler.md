@@ -5,16 +5,15 @@ Exacloud uses the **slurm** job scheduler. There are different slurm partitions 
 
 The installed version is `21.08.8`, and full documentation is published on the [slurm website](https://slurm.schedmd.com/documentation.html), as well as in man pages on the Exacloud headnodes, e.g.:
 
-```
+``` sh
 $ man srun
 ```
 
 ### Basic Use
 The simplest way to execute a job on a compute node is to prefix the desired command with srun, e.g.:
 
-```
-srun whoami
-
+``` sh
+$ srun whoami
 doejohn
 ```
 
@@ -23,8 +22,8 @@ That's it! There is a lot more detail than that, which is detailed below. srun i
 #### Running Longer Jobs
 By default, jobs are limited to 1 hour. You can request longer *run-time* using the `--time` option, e.g.:
 
-```
-srun --time 1-0
+``` sh
+$ srun --time 1-0
 ```
 The above requests 1 day of runtime. See the time limits section below for more information on requesting longer run-times.
 
@@ -35,8 +34,8 @@ By default your job submissions will have 1 CPU and 4 GB of RAM made available t
 ##### CPU
 To request additional CPUs, use the `-c` or `--cpus-per-task` options, e.g.:
 
-```
-srun -c 4 /path/to/example/application --threads=4
+``` sh
+$ srun -c 4 /path/to/example/application --threads=4
 ```
 !!! note
     Adding more CPUs to your job does not automatically increase the speed of your application. See the Parallel Computation guide for a primer on how applications can make use of multiple CPUs.
@@ -45,13 +44,13 @@ srun -c 4 /path/to/example/application --threads=4
 
 If your application needs more memory (aka RAM), your job will be killed with a message like this:
 
-```
-srun: error: exanode-2-45: task 0: Out Of Memory
+``` sh
+$ srun: error: exanode-2-45: task 0: Out Of Memory
 ```
 In that case, you'll want to increase the amount of memory requested for your job using the `--mem` option, e.g.:
 
-```
-srun --mem 8G /your/application
+``` sh
+$ srun --mem 8G /your/application
 ```
 
 The default unit for the memory option is MB. You can specify higher quantities by using the suffix G (for GB) or even T (for TB). When you are first running a new application, start with a relatively high memory request until you know what the job really needs. Then you can right-size the request, which will help your jobs run faster through the scheduler.
@@ -62,25 +61,24 @@ Local scratch space is a disk storage system present in compute nodes. It is use
 
 The local scratch is found at the `/mnt/scratch path`. It is requested as a Slurm "generic resource" via the `--gres` flag, e.g.:
 
-```
-srun --gres disk:1024 /path/to/command
+``` sh
+$ srun --gres disk:1024 /path/to/command
 ```
 
 The unit specified for disk is in GB. The above requests 1TB of scratch space.
 
 To request scratch space on a node with **SSD scratch drives**, use the slurm constraint feature `-C`:
 
-```
-srun --gres disk:1024 -C ssdscratch /path/to/command
+``` sh
+$ srun --gres disk:1024 -C ssdscratch /path/to/command
 ```
 
 ##### GPU
-See the [Exacloud GPU guide]() for information on getting started with GPUs in the cluster.
+See the [Exacloud GPU guide](09-GPU.md) for information on getting started with GPUs in the cluster.
 
 
 !!! question "¿Failed jobs?" 
     When something goes wrong if you use Exacloud for anything more than trivial computation, you may encounter errors. Please see the Exacloud troubleshooting guide for a starting point. If you still need help, you can contact ACC by sending an email to [acc@ohsu.edu](mailto:acc@ohso.edu).
-
 
 ***This includes the basic introduction to the use of the Slurm job scheduler in Exacloud. See below for more advanced scheduler topics, or consult the rest of the Exacloud User Guide for more on other topics.***
 
@@ -96,7 +94,7 @@ Interactive sessions provide a means to develop and debug pipelines as well as u
 
 If the above salloc workflow cannot work for some reason, the belew srun invocation can be used to get an approximation of a logon shell on a compute node:
 
-```
+``` sh
 $ srun --pty /usr/bin/bash -i
 
 ```
@@ -104,20 +102,20 @@ $ srun --pty /usr/bin/bash -i
 #### srun
 For any one-off commands, a simple srun followed by the executible provides the simplest way to get interactive commands. Slurm will run the requested command on a compute node, and will stream the output back to your console session.
 
-```
+``` sh
 $ srun -c 4 pipeline.sh
 ```
 
 #### salloc
 The salloc command provides you with a persistent allocation of requested resources on a single node. This can be particularly useful for developing a multi-stage pipeline which makes use of node local filesystems like /mnt/scratch or Docker containers.
 
-```
+``` sh
 salloc -c 2 --mem=12G
 salloc: Granted job allocation 1083
 ```
 The above command puts you into a sub-shell, but you are still running on the headnode. However, any commands prefixed with srun are actually run on the allocated compute node:
 
-```
+``` sh
 $ srun stepa.sh
 $ srun ls /mnt/scratch/user/foo
 $ nano stepa.sh
@@ -126,7 +124,7 @@ $ srun stepa.sh
 
 Once you are done with the allocation, simply exit:
 
-```
+``` sh
 $ exit
 exit
 salloc: Relinquishing job allocation 1083
@@ -143,20 +141,19 @@ The sbatch command accepts most of the same command line arguments as srun. It a
 
 Below is an example sbatch script:
 
-``` title="example.sh"
+``` sh title="example.sh"
 #!/bin/bash
 #SBATCH -p exacloud
 #SBATCH -c 8
 #SBATCH --mem=96G
 #SBATCH --time=6:00:00
-```
-```
+
 srun ./example_application
 ```
 Cope the above contents into a file accessible in Exacloud and customize to meet your needs. For example you would change the partition `(-p)` from "exacloud" to "guest" if you wanted to run in the guest partition.
 
 Then submit the batch job:
-```
+``` sh 
 $ sbatch example.sh
 ```
 
@@ -165,12 +162,12 @@ Exacloud has a number of different partitions in which jobs can run. Partitions 
 
 Specify a partition by passing the `-p` option to your srun, sbatch, or salloc command:
 
-```
+``` sh
 $ srun -p exacloud /path/to/script.sh
 ```
 Environment variables can be used to set default partitions for different types of partitions, e.g.:
 
-``` title="~/.bashrc"
+``` sh title="~/.bashrc"
 # Default srun partition
 export SBATCH_PARTITION="interactive"
 
@@ -237,7 +234,7 @@ The slurm accounting system serves a two-fold purpose in Exacloud:
 
 Jobs can be counted against a specified account by adding the `-A` flag to `srun`, `sbatch`, and `salloc` invocations, e.g.:
 
-```
+``` sh
 $ srun -A CurieLab --time=2:00:00 ...
 ```
 !!! note
@@ -245,7 +242,7 @@ $ srun -A CurieLab --time=2:00:00 ...
 
 To see your default account, use the sacctmgr command, for example if your username is frank:
 
-```
+``` sh
 $ sacctmgr show user frank
 	  User   Def Acct     Admin
 ---------- ---------- ---------
@@ -253,7 +250,7 @@ $ sacctmgr show user frank
 ```
 To see which accounts your user is associated with, run the sshare command:
 
-```
+``` sh
 $ sshare -U -u frank
 			 Account       User  RawShares  NormShares    RawUsage  EffectvUsage  FairShare
 -------------------- ---------- ---------- ----------- ----------- ------------- ----------
@@ -261,12 +258,12 @@ franklab                  frank     parent    0.077689          60      0.252222
 CurieLab                  frank     parent    0.015936         120      0.334220   0.054619
 ```
 To change your default account, for example to change it to CurieLab:
-```
+``` sh
 $ sacctmgr modify user frank set defaultaccount=CurieLab
 ```
 
 To see the full details of all users in an account, e.g. the CurieLab account:
-```
+``` sh
 $ sshare -a | grep CurieLab
   curieLab                           8    0.015936         120      0.334220   0.054619
   CurieLab            sally     parent    0.015936           0      0.334220   0.054619
@@ -280,7 +277,7 @@ $ sshare -a | grep CurieLab
 ```
 To see the total usage for an account, use `sshare -A <accountname>`.
 
-```
+``` sh
 $ sshare -A CurieLab
 			 Account       User  RawShares  NormShares    RawUsage  EffectvUsage  FairShare
 -------------------- ---------- ---------- ----------- ----------- ------------- ----------
@@ -313,7 +310,7 @@ When there is contention, your jobs may have to wait longer to start than those 
 
 To get a summary of the priorities of jobs, use the sprio command:
 
-```
+``` sh
 $ sprio 
       JOBID   PRIORITY        AGE  FAIRSHARE    JOBSIZE  PARTITION
    10058174      83348      25130      57085        134       1000
@@ -335,14 +332,14 @@ The higher the number in the PRIORITY column, the sooner the job will run. The P
  
 To see the relative priority of jobs in queue, run the following (if you aren't using the exacloud partition, change that to your partition name):
 
-```
+``` sh
 $ squeue -hp exacloud -t PD --format="%Q %A %a %u %C %m %l %q" | sort -n
 ```
 This will provided a list of jobs sorted by priority (highest at the bottom).
 
 Slurm provides an estimated start time for some jobs in the queue:
 
-```
+``` sh
 $ squeue -u <username> --start
 ```
 
@@ -371,14 +368,14 @@ In order to prevent resource exhaustion on the head nodes, slurm is configured t
 
 Additionally, in order to reduce the likelihood of a single active project consuming all of the submission slots, a limit of 5,000 submissions has been imposed on each Exacloud project. After the limit is reached, further submissions to the queue for that project will be rejected like so:
 
-```
+``` sh
 $ sbatch myjob.sh
 sbatch: error: Batch job submission failed: Job violates accounting/QOS policy (job submit limit, user's size and/or time limits) 
 ```
 
 To get an idea of how many of these slots you have taken, run the following command, replacing "project" with the name of your project:
 
-```
+``` sh
 $ sacct -n -a -A project -S $(date --date '-300 seconds' +"%H:%M:%S") | wc -l
 ```
 
@@ -386,7 +383,7 @@ $ sacct -n -a -A project -S $(date --date '-300 seconds' +"%H:%M:%S") | wc -l
 
 Each job has a time limit. At the conclusion of the time limit, the job will be killed and not put back into queue. You'll see a notification like the following:
 
-```
+``` sh
 srun: Force Terminated job 1075
 srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
 slurmstepd: error: *** STEP 1075.0 ON exanode-2-8 CANCELLED AT 2017-06-19T10:05:17 DUE TO TIME LIMIT ***
@@ -395,7 +392,7 @@ srun: error: exanode-2-8: task 0: Terminated
 
 The time limit should be specified in your `srun`, `salloc`, or `sbatch` invocations with the `--time` parameter. The format is "Days-Hours:Minutes:Seconds". For example:
 
-```
+``` sh
 $ srun --time=1-0       # One day
 $ salloc --time=6       # 6 minutes
 $ salloc --time=6:30:00 # 6 hours, 30 minutes
@@ -404,7 +401,7 @@ $ srun                  # Uses the default
 
 If omitted, the job is assigned the default time for that partition. In most cases the default is 1 hour. The default maximum runtime is 36 hours, but that can be extended by the use of the slurm QOS feature. For example, to request 7 days of run-time in the exacloud partition, or 20 days in the GPU partition:
 
-```
+``` sh
 $ srun --qos long_jobs --time=7-0
 $ srun --qos gpu_long_jobs --time=20-0
 ```
@@ -418,12 +415,12 @@ Slurm's QOS feature can be used to adjust limits on resources. This is typically
 
 QOS is invoked by adding the `--qos` flag followed by the QOS name to `srun`, `salloc` ,`sbatch` invocations:
 
-```
+``` sh
 $ srun --time=1-0 --qos highio
 ```
 
 You can view the details of QOS policies by running:
-```
+``` sh
 $ sacctmgr show qos format=Name,GrpJobs,MaxWall,MaxTRES,MaxTRESPerUser
 ```
 

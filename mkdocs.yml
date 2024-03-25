@@ -16,19 +16,33 @@ nav:
     - Exacloud User Guie:
       - Introduction: exacloud/04-Introduction.md
       - Job Scheduler: exacloud/05-Job-Scheduler.md
-      - Parallel Computation: exacloud/05-Parallel-Computation.md
-      - Storage: exacloud/06-Storage.md
-      - Singularity: exacloud/07-Singularity.md
-      - GPU: exacloud/08-GPU.md
-      - Graphical Applications: exacloud/09-Graphical-Applications.md
-      - Group File Ownership: exacloud/10-Group-File-Ownership.md
-      - Jupyter: exacloud/11-Jupyter.md
-      - Modules: exacloud/12-Modules.md
-      - MPI: exacloud/13-MPI.md
-      - Perl Tips: exacloud/14-Perl-Tips.md
-      - Docker: exacloud/15-Docker.md
-      - Troubleshooting: exacloud/16-Troubleshooting.md
-    
+      - Parallel Computation: exacloud/06-Parallel-Computation.md
+      - Storage: exacloud/07-Storage.md
+      - Singularity: exacloud/08-Singularity.md
+      - GPU: exacloud/09-GPU.md
+      - Graphical Applications: exacloud/10-Graphical-Applications.md
+      - Group File Ownership: exacloud/11-Group-File-Ownership.md
+      - Jupyter: exacloud/12-Jupyter.md
+      - Modules: exacloud/13-Modules.md
+      - MPI: exacloud/14-MPI.md
+      - Perl Tips: exacloud/15-Perl-Tips.md
+      - Docker: exacloud/16-Docker.md
+      - Troubleshooting: exacloud/17-Troubleshooting.md
+      - Spack: exacloud/18-Spack.md
+      - RStudio: exacloud/19-RStudio.md
+      - R kernel in jupyter notebook: exacloud/20-R-kernel-in-jupyter-notebook.md
+      - cryo-EM: exacloud/21-cryo-EM.md
+      - VS Code: exacloud/22-VS-code.md
+      - Julia: exacloud/23-Julia.md
+      - Web Portal: exacloud/24-Web-Portal.md
+  - Exastack: 
+    - What is Exastack: exastack/00-Exastack.md
+    - Command Line  Operations: exastack/01-Command-Line-Operation.md
+    - Introduction: exastack/02-Introduction.md
+    - Launch a Virtual Machine: exastack/03-Launch-a-Virtual-Machine.md
+    - Security Groups: exastack/04-Security-Groups.md
+    - VM Configuration with Cloud-Init: exastack/05-VM-Configuration-with-Cloud-Init.md
+
 markdown_extensions:
   - admonition
   - pymdownx.details
@@ -37,6 +51,8 @@ markdown_extensions:
       alternate_style: true  
   - attr_list
   - md_in_html
+  - pymdownx.tasklist:
+      custom_checkbox: true
 
 plugins:
   - macros

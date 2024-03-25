@@ -14,19 +14,19 @@ Environment settings specific to the cluster are provided by `/etc/profile.d/op
 
 ACC recommends the use of OpenMPI 4 or newer, built with UCX support. You can activate that environment module:
 
-```
+``` sh
 $ module load openmpi/4.1.1-ucx
 ```
 
 Once you do the above, you should be able to run applications which support this version, and can compile new MPI applications.
 
-See the [Exacloud Modules](12-Modules.md) guide for more information on working with modules.
+See the [Exacloud Modules](13-Modules.md) guide for more information on working with modules.
 
 ### Custom MPI
 
 If you have need to utilize your own compiled MPI, set your ``LD_LIBRARY_PATH``, ``PATH``, and ``MPI_HOME`` environment variables to reflect the installed location, and be sure to also set the following.
 
-```
+``` sh
 unset OMPI_MCA_btl\
 export OMPI_MCA_pml="ucx"\
 export OMPI_MCA_btl_tcp_if_exclude="lo,docker0,virbr0"
@@ -41,7 +41,7 @@ slurm will automatically handle OpenMPI setup on MPI-enabled executables. In oth
 
 For example, to start a job with 160 tasks:
 
-```
+``` sh
 $ srun -n 160 --mem-per-cpu=10G /home/exacloud/gscratch/example/mpiprogram
 
 ```

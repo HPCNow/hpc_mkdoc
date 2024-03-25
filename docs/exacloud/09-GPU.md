@@ -10,7 +10,7 @@ Exacloud contains the following GPU node configurations:
 
 ### Access to GPU partition
 
-The GPU nodes are not a part of the standard slurm partitions in exacloud (see the [job scheduler documentation](05-exacloud-Job-Scheduler.md)for additional details). Use the **gpu** partition to access GPU nodes.
+The GPU nodes are not a part of the standard slurm partitions in exacloud (see the [job scheduler documentation](05-Job-Scheduler.md)for additional details). Use the **gpu** partition to access GPU nodes.
 
 Access to the GPU partition is included with all paid Exacloud accounts.
 
@@ -28,14 +28,14 @@ In addition to specifying time, CPU, and RAM requirements for a job, GPU jobs mu
 
 Run pipeline.sh in the gpu partition, requesting a single GPU:
 
-```
+``` sh
 $ srun -p gpu --gres gpu:1 pipeline.sh
 
 ```
 
 You can specify the model of GPU (rtx2080, p100, v100, or a40 in our environment):
 
-```
+``` sh
 $ srun -p gpu --gres gpu:rtx2080:1 pipeline.sh
 $ srun -p gpu --gres gpu:p100:1 pipeline.sh
 $ srun -p gpu --gres gpu:v100:1 pipeline.sh$ srun -p gpu --gres gpu:a40:1 pipeline.sh
@@ -43,7 +43,7 @@ $ srun -p gpu --gres gpu:v100:1 pipeline.sh$ srun -p gpu --gres gpu:a40:1 pipeli
 
 More than one GPU can be requested for a single job if necessary:
 
-```
+``` sh
 $ srun -p gpu --gres gpu:a40:6 pipeline.sh
 
 ```
@@ -53,14 +53,14 @@ The same syntax applies to **salloc** and **sbatch**. Also remember to includ
 ### CUDA tools
 
 
-ACC recommends using the [Modules ](http://fshead1:8080/ACC/24588403.html)system for loading CUDA and related libraries. For example, to load CUDA 11.4 and cuDNN 8.2.4:
+ACC recommends using the [Modules ](13-Modules.md)system for loading CUDA and related libraries. For example, to load CUDA 11.4 and cuDNN 8.2.4:
 
-```
+``` sh
 $ module load cuda/11.4.2
 $ module load cudnn/8.2.4.15-11.4
 ```
 
-We may have additional CUDA installations available via [Spack](http://fshead1:8080/ACC/Exacloud-Spack_113945210.html).
+We may have additional CUDA installations available via [Spack](18-Spack.md).
 
 The Exacloud head nodes and GPU nodes also have the following versions of the CUDA toolkits available:
 
@@ -77,7 +77,7 @@ The default /usr/local/cuda is a symlink to the 10.2 installation.
 
 The **sinfo** command will show the count of fully allocated, idle, and mixed (partially allocated) GPU nodes.  The **squeue** command can show what jobs are running and queued (pending) on the GPU nodes:
 
-```
+``` sh
 $ sinfo -p gpu
 PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
 gpu          up 14-00:00:0      1  alloc exanode-8-8

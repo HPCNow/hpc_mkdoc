@@ -20,7 +20,7 @@ Exacloud and RDS are secure computing locations approved for data classified as 
 ### Computing resource limits
 
 
-See the [Job Scheduler documentation](http://fshead1:8080/ACC/22053376.html) for details on how to run jobs on compute nodes. See below for specific policies surrounding resource use:
+See the [Job Scheduler documentation](05-Job-Scheduler.md) for details on how to run jobs on compute nodes. See below for specific policies surrounding resource use:
 
 ### Do Not Run Programs On The Head Nodes
 

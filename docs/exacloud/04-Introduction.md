@@ -12,17 +12,17 @@ Policy
 Log in to head node to log in to the cluster, point your SSH client to either one of the two cluster head nodes, e.g.:
 
 ### First head node
-```
-ssh exahead1.ohsu.edu
+``` sh
+$ ssh exahead1.ohsu.edu
 ```
 ### Second head node
-```
-ssh exahead2.ohsu.edu
+``` sh 
+$ ssh exahead2.ohsu.edu
 ```
 
 **This name can also be used to access a head node**
-```
-ssh exacloud.ohsu.edu
+``` sh
+$ ssh exacloud.ohsu.edu
 ```
 
 Give your OHSU username and password as credentials at log-in.
@@ -55,7 +55,7 @@ If you cannot find an application in the standard directories, a few other direc
 **Another set of those applications are available via the Red Hat/CentOS Software Collections Library (SCL).**
 
 Submitting a Job
-To see how to submit your first job, proceed to the [Job Scheduler page]().
+To see how to submit your first job, proceed to the [Job Scheduler page](05-Job-Scheduler.md).
 
 Support
 If you encounter an obstacle, please consult the Exacloud Troubleshooting documentation. If you are still at a dead end, please contact ACC for support through the web portal or by emailing [acc@ohsu.edu](mailto:acc@osu.edu).

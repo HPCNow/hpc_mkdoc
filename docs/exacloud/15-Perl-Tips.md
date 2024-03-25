@@ -11,7 +11,7 @@ However, as the cluster is a shared resource we want to keep this install of per
 
 To install and use perl modules in a common location, you will want to make use of PERL5LIB environment variable; e.g.
 
-```
+``` sh
  export PERL5LIB=/home/exacloud/lustre1/foo/perl/lib/perl5:$PERL5LIB
 ```
 

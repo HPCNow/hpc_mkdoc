@@ -10,9 +10,9 @@ Using Jupyter Hub is often simpler, but it is less customizable. Running your ow
 
 See the below sections for guidance on these two options.
 
-### Jupyter Hub [exajupyter.ohsu.edu](exajupyter.ohsu.edu)
+### Jupyter Hub [exajupyter.ohsu.edu]
 
-Exacloud includes a [Jupyter Hub](https://jupyter.org/) instance to facilitate the running of Jupyter notebooks in the cluster. Users connect to a single web interface, but notebooks are spawned as [Slurm jobs](http://fshead1:8080/ACC/22053376.html) on compute nodes. This allows Jupyter Notebooks to be easily run on the cluster without users having to do complex proxy configurations to use them.
+Exacloud includes a [Jupyter Hub](https://jupyter.org/) instance to facilitate the running of Jupyter notebooks in the cluster. Users connect to a single web interface, but notebooks are spawned as [Slurm jobs](05-Job-Scheduler.md) on compute nodes. This allows Jupyter Notebooks to be easily run on the cluster without users having to do complex proxy configurations to use them.
 
 #### Getting Started
 
@@ -20,7 +20,7 @@ Exacloud includes a [Jupyter Hub](https://jupyter.org/) instance to facilitate
 1.  Connect to [exajupyter.ohsu.edu](https://exajupyter.ohsu.edu/).
 2.  Sign in with your OHSU credentials.
 3.  Click the **Start My Server** button.
-4.  Fill out the form with appropriate options for your [job submission](http://fshead1:8080/ACC/22053376.html):
+4.  Fill out the form with appropriate options for your [job submission](05-Job-Scheduler.md):
     1.  **Partition**: The cluster partition (i.e. the -p option)
     2.  **Number of Cores**: The number of CPU cores (i.e. the -c option)
     3.  **Memory GB**: The amount of RAM in GB (i.e. the --mem option)
@@ -32,7 +32,7 @@ Exacloud includes a [Jupyter Hub](https://jupyter.org/) instance to facilitate
 
 Your personal hub will start in your home directory. The Jupyter Hub web UI does not have an easy way to navigate to other file-systems, but this can be done via symlinks. ACC recommends creating a symlink to your lab group storage in lustre in your home directory. E.g.:
 
-```
+``` sh
 $ ln -s /home/exacloud/lustre1/foolab ~/lustre1-foolab
 
 ```
@@ -47,7 +47,7 @@ The first step is create an activate an environment (via conda or vanilla virtua
 
 Then with the new environment activated, run the following (example is based on a virtualenv running python-3.11.4):
 
-```
+``` sh
 $ python -m ipykernel install --user --name python3.11.4 --display-name "Python 3.11.4"
 
 ```
@@ -56,7 +56,7 @@ Then once you launch a notebook via jupyterhub, you can choose that kernel for m
 
 Here is a full worked example:
 
-```
+``` sh 
 $ /home/exacloud/software/python/3.11.4/bin/python -m venv newenv
 $ source newenv/bin/activate
 (newenv) $ pip install jupyter
@@ -91,7 +91,7 @@ ACC provides a convenience script for [creating Python virutal environments](ht
 
 
 The following can be used as an sbatch template
-```
+``` sh
 #!/bin/bash
 #SBATCH --partition exacloud
 #SBATCH --account MyLab
@@ -115,11 +115,10 @@ echo "Once the ssh connection is established, copy the URL printed below which"
 echo "starts with http://127.0.0.1:${port}"
 echo
 echo "Navigate to that URL in your local browser."
-```
 
-```
 srun jupyter-notebook --no-browser --port=${port} --ip=${node}
 ```
+
 Save the above as a file accessible in Exacloud, e.g. "jupyter.sh". Customize the #SBATCH parameters to meet the needs of your notebook. The CPU count should be n+1, where n is the maximum number of concurrent kernels you plan to run.
 
 Start the job by running `sbatch jupyter.sh`. Once the job starts, the output log will provide some instructions, including an example ssh command, for making a tunnel from your local system to the running notebook.
@@ -132,7 +131,7 @@ Start the job by running `sbatch jupyter.sh`. Once the job starts, the output l
 
 A custom Python virtual environment for running Jupyter can be constructed like so
 
-```
+``` sh
 $ /home/exacloud/software/python/3.10.4/bin/python3 -m venv /home/groups/MyLab/jupyter
 $ source /home/groups/MyLab/jupyter/bin/activate
 (jupyter) $ pip install jupyter

@@ -27,7 +27,7 @@ A command-line tool for identifying your project ID's usage against quota is ava
 
 You first need to discover the numeric project ID number of your top-level gscratch directory, and then use that project ID (3001 in the example below) to discover your quota and usage:
 
-```
+``` sh
 $ cd /home/exacloud/gscratch/MyLabDir
 $ lfs project -d .
 3001 P .
@@ -38,7 +38,7 @@ Disk quotas for prj 3001 (pid 3001):
               .  254.2G      0k     10T       - 1040581       0 1500000       -
 $
 ```
-(The -h switch is optional but results in output you may find easier to process quickly.)
+(The `-h` switch is optional but results in output you may find easier to process quickly.)
 
 !!! tip
     Please consult the lfs(1) man page for further information and other available options.
@@ -56,7 +56,7 @@ $
 
 In order to utilize `/mnt/scratch`, you **must** request it as a generic resource (using the `--gres` flag) in your job request, e.g.:
 
-```
+``` sh
 srun -p exacloud --gres disk:1024 /path/to/command
 
 ```
@@ -67,10 +67,7 @@ The unit of disk is GB. The above example requests 1TB of scratch space. The sch
 
 ACC provides two scripts, `/usr/local/bin/mkdir-scratch.sh` and `/usr/local/bin/rmdir-scratch.sh` to assist with creating and removing local scratch jobs within slurm jobs. The mkdir script creates a directory in `/mnt/scratch/N`, where N is the slurm job ID. The following provides a template for how these scripts can be used within an sbatch submission:
 
-
-**/mnt/scratch set-up**
-
-```
+``` sh title="/mnt/scratch set-up" 
 srun /usr/local/bin/mkdir-scratch.sh
 SCRATCH_PATH="/mnt/scratch/${SLURM_JOB_ID}"
 
@@ -90,7 +87,7 @@ On many compute nodes, `/mnt/scratch` storage is based on traditional hard dri
 
 To request scratch space on a node with SSDs, add the argument `-C ssdscratch` to your srun command, e.g.:
 
-```
+``` sh
 srun -p exacloud -C ssdscratch --gres disk:8192 /path/to/command
 
 ```

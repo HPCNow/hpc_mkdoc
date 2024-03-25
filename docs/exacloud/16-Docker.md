@@ -2,12 +2,12 @@ ACC - Advanced Computing Center : Docker
 ==================================================
 
 !!! note
-    **ACC highly recommends the use of [Singularity ](07-Singularity.md)for running containerized workflows. Singularity can work with docker containers. An older version of Docker is provided for convenience, but the necessary wrapper (see below) will prevent some workflows from working as advertized.**
+    ACC highly recommends the use of [Singularity ](08-Singularity.md)for running containerized workflows. Singularity can work with docker containers. An older version of Docker is provided for convenience, but the necessary wrapper (see below) will prevent some workflows from working as advertized.
 
 Docker is available on exacloud compute nodes to facilitate the use or creation of custom environments which are not easily recreated within the cluster's node configuration.
 
 !!! warning "Import"
-    **Docker is not available on the exacloud head nodes.** 
+    Docker is not available on the exacloud head nodes.
 
 ### Access to Docker on exacloud
 
@@ -19,20 +19,20 @@ Users cannot directly invoke the `docker` command in exacloud. Instead use `s
 
 exadocker accepts the same arguments as the docker command. So for example:
 
-```
+``` sh
 docker run ubuntu whoami
 
 ```
 
 becomes:
 
-```
+``` sh
 sudo /opt/acc/sbin/exadocker run ubuntu whoami
 
 ```
 
 !!! warning "Import"
-    **The `exadocker` script is not installed on the head nodes, only on the compute nodes. You'll need to submit a job via slurm, or launch an interactive session to a compute node, to use it.**
+    The `exadocker` script is not installed on the head nodes, only on the compute nodes. You'll need to submit a job via slurm, or launch an interactive session to a compute node, to use it.
 
 Existing docker pipeline scripts can be updated to work with the new environment by simply replacing `docker` with `sudo /opt/acc/sbin/exadocker`.
 
@@ -45,24 +45,24 @@ Do not leave docker containers running after your work completes. If you are sta
 If you are invoking a one-off command using the docker `run` sub-command, include the parameter `--rm=true` to ensure that the container created from that run command is removed after execution is complete.
 
 !!! note
-    **ACC will periodically check for abandoned containers and stop and delete them without notice.**
+    ACC will periodically check for abandoned containers and stop and delete them without notice.
 
 ### Mounting Docker volumes
 
 Docker has the capability to mount filesystems inside containers, known as the "volumes" feature (see the docker-run man page for more details). When attempting to mount a shared filesystem like RDS or gscratch, you may see an error like this:
 
 !!! failure ""
-    **/usr/bin/docker-current: Error response from daemon: mkdir /home/groups/foolab/test: permission denied.**
+    /usr/bin/docker-current: Error response from daemon: mkdir /home/groups/foolab/test: permission denied.
 
 This is due to the docker process on nodes not being able to see inside these shared filesystems. In order to make this work, you need to set -v flag to the filesystem mountpoint.
 
 For gscratch this is the same for all users:
 
-```
+``` sh
 -v /home/exacloud/gscratch:/home/exacloud/gscratch
 ```
 For RDS, this depends on your group's path:
-```
+``` sh
 -v /home/groups/MyLab:/home/groups/MyLab
 ```
 

@@ -20,7 +20,7 @@ These are introduced below. See the full [module command documentation](https:/
 
 To see what modules are available, run the `module avail` command:
 
-```
+``` sh
 $ module avail
 
 ------------------------------------ /home/exacloud/software/modules ------------------------------------
@@ -35,7 +35,7 @@ Exacloud-provided modules are named in the format software/version. You can have
 #### Loading Modules
 
 To load a module, type the command `module load` followed by the module name/version:
-```
+``` sh
 $ module load python/3.10.4
 $ python3 --version
 Python 3.10.4
@@ -49,16 +49,16 @@ Changes to your shell environment on the headnode are automatically imported int
 
 To see a list of currently loaded module, use the module list command:
 
-```
+``` sh
 $ module list
 Currently Loaded Modulefiles:
   1) use.own         2) python/3.10.4
+```
 
-#### Removing loaded Modules
-``` 
+#### Removing loaded Modules 
 To remove a module from your environment, use the `module rm` command:
 
-```
+``` sh
 $ module rm python/3.10.4
 sminatha@exahead1 ~ $ module list
 Currently Loaded Modulefiles:
@@ -70,7 +70,7 @@ Currently Loaded Modulefiles:
 
 If you have some modules you'll know you always want loaded, you can add them to your ~/.bashrc to have them loaded at each login to Exacloud:
 
-```
+``` sh
 module load python/3.10.4
 module load cuda/10.2.89
 module load cudnn/7.6-10.2
@@ -78,14 +78,12 @@ module load cudnn/7.6-10.2
 
 If you have different runtime requirements for different jobs, you can either manage your environment at runtime before invoking `srun`, or you can add the appropriate module load commands to your sbatch script:
 
-**Example sbatch**
-```
+``` sh title="example.sh"
 #!/bin/bash
 #SBATCH --partition exacloud
 #SBATCH -c 2
 #SBATCH --mem 10G
 #SBATCH --time 4:00:00
-
 module load R/3.6.3
 
 srun Rscript /path/to/your/file
@@ -97,13 +95,13 @@ And then each job can have its own requirements specified in the script.
 It is possible to create and load your own custom modules. This is useful for activating environments which are installed in your group's gscratch or RDS, or even small environments in your home directory.
 
 First, create a directory called **privatemodules** in your home directory:
-```
+``` sh
 $ mkdir ~/privatemodules
 ```
 
 Then you'll want to make a file in that directory named for the software and version. In this example, we are created a module file `MegaUltra-12.1` for the fictional software MegaUltra version 12.1, installed in the `/home/exacloud/gscratch/MyLab/MegaUltra/12.1` directory:
 
-```
+``` sh
 #%Module 1.0
 #
 #  OpenMPI module for use with 'environment-modules' package:
@@ -116,7 +114,8 @@ setenv                  MEGA_ULTRA_CACHE /home/exacloud/gscratch/MyLab/MegaUltra
 The above would add the application binary path to the user's executable **PATH**, add the lib dir to **LD_LIBRARY_PATH**, and set an environment variable **MEGA_ULTRA_CACHE**. These are common components to module files. See examples in `/home/exacloud/software/modules`, and consult the [modulefile documentation](https://modules.readthedocs.io/en/latest/modulefile.html). You can also view the contents of a loaded module using the `module show` command.
 
 One the file is created, you can add your privatemodules directory to your list of available modules, and load your module:
-```
+
+``` sh
 $ module load use.own
 $ module avail
 ---------------------------------- /home/users/sminatha/privatemodules ----------------------------------
@@ -125,9 +124,8 @@ $ module load MegaUltra-12.1
 $ which MegaUltra
 /home/exacloud/gscratch/MyLab/MegaUltra/12.1/bin/MegaUltra
 ```
-
 To have your personal modules always be available at start-up, add the following to your` ~./bashrc` file:
-```
+``` sh
 module load use.own
 ```
 
@@ -139,7 +137,7 @@ The [Exacloud Spack](http://fshead1:8080/ACC/Exacloud-Spack_113945210.html) sy
 By activating the spack module system, so you gain access to all of the packages and versions installed by spack, instead of the curated list provided by ACC in `/home/exacloud/software/modules`. The list can be quite overwhelming, but may prove useful to some users.
 
 To activate the spack modules, run the following:
-```
+``` sh
 $ source $(spack location -i lmod)/lmod/lmod/init/bash
 $ module use /home/exacloud/software/spack/share/spack/modules/linux-centos7-ivybridge
 ```
@@ -149,7 +147,7 @@ The above will allow you to use the module system and commands.
 module spider cuda
 
 Will output a list of all packages with cuda in their name. You can then paste in the suggested module load statement to load the module for cuda.
-```
+``` sh
 module load cuda-11.0.2-gcc-8.4.0-sf73m43
 ```
 

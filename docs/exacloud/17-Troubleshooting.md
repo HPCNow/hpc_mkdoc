@@ -24,7 +24,7 @@ srun: error: Unable to allocate resources: Invalid account or account/partition 
 
 The above indicates that you are using an invalid account, (`-A` argument). To see which accounts you have access to, run:
 
-```
+``` sh
 $ sshare -U
 ```
 
@@ -47,7 +47,7 @@ The above indicates that you have reached the maximum allowed submissions for th
 
 
 You can see the state of your submitted jobs by running the following (substituting your username):
-```
+``` sh
 $ squeue -u username
 ```
 Jobs which are submitted but not yet running will show PD ("pending") in the ST ("state") column. The reason for a job pending will in the final column. See below for information on each pending state.
@@ -91,7 +91,7 @@ If you see **(Job's QOS not permitted to use this partition (basic allows basic
 --------------------
 
 If a job was successfully submitted and is no longer in the queue, the scheduler ran the job. However in same cases jobs that run can fail. To see the status of a completed job, run:
-```
+``` sh
 $ sacct -j <jobid>
 ```
 The State column will indicate how the job ended. The ExitCode column can also be relevant. See below for guidance on the various states of failure. See the slurm documentation for more details on the use of the `sacct` command.

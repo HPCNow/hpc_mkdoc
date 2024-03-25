@@ -3,7 +3,7 @@ ACC - Advanced Computing Center : Exacloud FAQ
 
 ### How can I obtain an exacloud account?
 
-See the [Exacloud Introduction](21896490.html) document.
+See the [Exacloud Introduction](04-Introduction.md) document.
 
 ### How can I find software on exacloud?
 
@@ -29,7 +29,7 @@ Slurm has different tools for getting stats from jobs, depending on whether they
 
 For running jobs, use `sstat`:
 
-```
+``` sh
 sstat -j 2379069 --format "JobID,MaxVMSize"
 
 JobID        MaxVMSize  AveCPU
@@ -43,7 +43,7 @@ This displays the job ID and the maximum memory size used thus far. Run `sstat -
 
 For complete jobs, use `sacct`:
 
-```
+``` sh
 sacct -j 1000000 --format "JobID,Elapsed,ReqCPUs,CPUTime,ReqMem,MaxVMSize"
 
 JobID          Elapsed   ReqCPUS    CPUTime     ReqMem  MaxVMSize
@@ -59,10 +59,8 @@ Another useful tool for obtaining stats from completed jobs is the job profiler 
 
 to see recommendations for a particular jobs, use the -j argument to pass the job number into the profiler
 
-```
+``` sh 
 /usr/local/bin/jobprofile.py -j 12345678
-``` 
-```
 /usr/local/bin/jobprofile.py --help
 usage: jobprofile.py [-h] [--nosteps] [--csv]
                      [--log-level {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
@@ -84,4 +82,4 @@ If you find that using `sstat` or `sacct` that you cannot see stats for all of y
 
 ### How can I run graphical applications on compute nodes?
 
-See the [Graphical Applications via X11 forwarding](22053373.html) guide.
+See the [Graphical Applications via X11 forwarding](10-Graphical-Applications.md)guide.

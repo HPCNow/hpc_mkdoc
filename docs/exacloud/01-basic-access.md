@@ -3,7 +3,7 @@ ACC - Advanced Computing Center : Basic Access
 
 The Exacloud Basic Access service allows any paid ACC account holder to access a limited cluster computing environment within Exacloud.  This Basic Access service contrasts with the long-standing Exacloud Standard Access service, which provides project- or lab-based access to the entire Exacloud compute cluster, at a higher per-user fee.
 
-If you are new to Exacloud, please have a look at the Exacloud documentation here:  [Exacloud User Guide](Exacloud-User-Guide_21896659.html)
+If you are new to Exacloud, please have a look at the Exacloud documentation here:  [Exacloud User Guide](04-Introduction.md)
 
 If you do not already have a paid ACC account, or if you need assistance beyond what you have found in these documents, please contact the ACC Service Desk by sending email to acc@ohsu.edu, or by entering a ticket here (on-campus or VPN):  [https://service.ohsu.edu/servicedesk/customer/portal/10](https://service.ohsu.edu/servicedesk/customer/portal/10)
 

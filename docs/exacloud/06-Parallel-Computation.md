@@ -10,8 +10,7 @@ A single application process can start multiple sub-processes known as "threads.
 
 It is important to match the number of threads started by the application with the number of CPUs requested from the scheduler (using the **-c** or **--cpus-per-task** options). Most applications will have an option for specifying the number of threads which should be started. See your application's documentation for details. For example, if we want to run a job with 8 threads, and the application has an option **--threads** to specify that number, the sbatch script would look like this:
 
-**Multi-threaded jobs**
-```
+``` sh title="Multi-threaded jobs"
 #!/bin/bash
 #SBATCH --cpus-per-task=8
 #SBATCH --mem-per-cpu=2G
@@ -25,8 +24,8 @@ Message passing is a technique that allows multiple application processes to be 
 
 The most prominent message passing system is [MPI](https://www.mpi-forum.org/docs/), though there are others like [OpenMP](https://www.openmp.org/). With an MPI application, you specify the number of concurrent tasks with the **-n** or **--ntasks** option. For example, to start a job with 80 concurrent worker processes:
 
-**MPI sbatch**
-```
+
+``` sh title="MPI sbatch"
 #!/bin/bash
 #SBATCH --ntasks=80
 #SBATCH --mem-per-cpu=10G
@@ -34,7 +33,7 @@ The most prominent message passing system is [MPI](https://www.mpi-forum.org/do
 srun /path/to/your/mpi/application
 ```
 
-The scheduler will handle allocating resources and starting the job, even if the number of tasks requires more than one node. See the [Exacloud MPI guide](http://fshead1:8080/ACC/22053384.html) for additional guidance on using MPI applications in Exacloud.
+The scheduler will handle allocating resources and starting the job, even if the number of tasks requires more than one node. See the [Exacloud MPI guide](14-MPI.md) for additional guidance on using MPI applications in Exacloud.
 
 ### Scheduler Techniques
 
@@ -48,8 +47,8 @@ The most basic form of this is simply submitting multiple sbatch jobs to the que
 
 You can re-use the same sbatch script for multiple runs by passing arguments to your sbatch script, which can then be passed as arguments to your application. For example:
 
-**sbatch arguments**
-```
+
+``` sh title="Sbatch arguments"
 #!/bin/bash
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=16G
@@ -59,22 +58,21 @@ srun /path/to/your/pipeline.py --input=$1
 ```
 In the above, **$1** refers to the first argument passed to the sbatch script. Then the above can be submitted like so:
 
-**Submit sbatch with arguments**
-```
+****
+``` sh title="Submit sbatch with arguments"
 $ sbatch myscript.sh /path/to/your/samples/1.tar
 ```
 Multiple submissions can be made manually, changing the argument(s) for each. With a large number of submissions, you may want to use a script or shell loop to help with submission.
 
 For example, looping over files in a directory:
 
-**Loop of files**
-```
+``` sh title="Loop of files"
 $ for id in /path/to/your/samples/*; do echo sbatch myscript.sh $id; done
 ```
 Or if your script takes a sequence of integer inputs:
 
-**Sequence of integers**
-```
+
+``` sh title="Sequence of integers"
 $ for id in $(seq 1 505); do echo sbatch yourscript.sh $id; done
 ```
 !!! note
@@ -98,7 +96,9 @@ The above example illustrates the concept, but would not be particularly useful 
 The logon shell you use when connecting to Exacloud has the capability to start processes and then put them into the background. The background processes, called jobs, continue to run while the shell can be used for other tasks. In the context of cluster scheduling, this can allow you to start several tasks all at the same time within the same submission on the same node. This option may be right for you if you need a basic level of parallel orchestration, but don't require the complexity of the dependency system.
 
 The code below illustrates how to use shell background jobs to achieve parallel computation in an sbatch submission:
-```
+
+
+``` sh
 #!/bin/bash
 #SBATCH --ntasks=9
 #SBATCH --cpus-per-task=1

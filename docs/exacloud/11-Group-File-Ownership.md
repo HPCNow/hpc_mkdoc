@@ -12,7 +12,7 @@ Our users nearly always are members of multiple groups, and it's not always obvi
 
 Use the Unix `groups` utility to list your group memberships.
 
-```
+``` sh
 [exahead1 ~]$ groups
 HPCUsers accessACCext ACCadmin okenuser exacloud_mpi exacloud_gpu
 exalabadmin accessexacloud
@@ -23,7 +23,7 @@ exalabadmin accessexacloud
 
 Use the Unix `id` utility to see your working group.
 
-```
+``` sh
 [exahead1 ~]$ id -gn
 HPCUsers
 
@@ -33,14 +33,13 @@ HPCUsers
 
 Use the `newgrp` or `sg` utilities as described in our documentation on [Changing Your Unix Group ID](http://fshead1:8080/ACC/Changing-Your-Unix-Group-ID_22053174.html).
 
-Unix groups
------------
+### Unix groups
 
 #### How can I tell which group owns a file or directory?
 
 Within a shell session, the `ls` utility provides the easiest way to see file ownership:
 
-```
+``` sh
 [exahead1 lustre1]$ cd /home/exacloud/lustre1/Galaxy
 [exahead1 Galaxy]$ ls -l
 total 34
@@ -50,7 +49,6 @@ drwxr-xr-x.  6 galaxyuser galaxy 4096 Jun  8  2014 database/
 drwxr-xr-x. 37 galaxyuser galaxy 4096 Oct  2  2017 dataset_library_import/
 drwxr-xr-x.  3 galaxyuser galaxy 4096 Mar  3  2016 shed_tools/
 drwxr-xr-x.  4 galaxyuser galaxy 4096 Mar  3  2016 tool_dependencies/
-
 ```
 
 In this case, user "root" and group "root" own the file named `00ACC_MOVED_DIRECTORIES.txt`, while user "galaxyuser" and group "galaxy" own everything else.
@@ -59,7 +57,7 @@ In this case, user "root" and group "root" own the file named `00ACC_MOVED_DIRE
 
 Most programming languages have methods for doing so. Within a shell script on Exacloud, you can use the `stat` utility to report group ownership. Here's a little shell loop that will report group ownership of all items in the current directory.
 
-```
+``` sh
 for ITEM in *; do
   GRP=$(stat -c '%G' "$ITEM")
   echo "$ITEM belongs to group '$GRP'"
@@ -71,17 +69,18 @@ done
 
 The `chgrp` utility was created just for that purpose:
 
-```
+```sh
 # change ownership of a single file
 chgrp MyLab /path/to/myFile
 # recursively change ownership of an entire directory tree
 chgrp -R MyLab /path/to/myDirectory
 
 ```
-!!! question
-    #### What group will own a file I create?
 
-This is a tricky question!
+#### What group will own a file I create?
+
+!!! Question
+    This is a tricky question!
 
 Generally speaking, any new files or directories you create or copy will be owned by your current working group. If that group is `HPCUsers` rather than your lab group, then `HPCUsers` will own the new items.
 
@@ -91,7 +90,7 @@ The first involves the use of the `mv` utility. If you move (`mv`) a file rath
 
 The second exception involves directories that have the SGID (set group ID) bit set. Take a look at at the listings for two different directories:
 
-```
+``` sh
 drwxrwsr-x.  6 root     biostat    4096 Nov 17  2017 biostat/
 drwxr-xr-x.  4 root     root       4096 Mar 25  2015 cBioPortal/
 
@@ -107,14 +106,14 @@ If you are the owner of a directory, you can set the SGID bit using the `chmod`
 
 To add it to an existing directory, use `g+s`:
 
-```
+``` sh
 chmod g+s myDirectory
 
 ```
 
 If you want to add it to all the directories in an exiting directory tree, the recipe is a bit more obscure. Some familiarity with the `find` utility is helpful.
 
-```
+``` sh
 # add the SGID bit to myDirectory and all of its
 # subdirectories
 find myDirectory -type d -exec chmod g+s {} \;
@@ -123,7 +122,7 @@ find myDirectory -type d -exec chmod g+s {} \;
 
 When creating a directory from scratch, you can use an octal mode to set it:
 
-```
+``` sh
 # using the "install" utility
 install -d -m 2770 /path/to/myDirectory
 # using mkdir
@@ -159,12 +158,12 @@ The `lfs` utility will report the Lustre quota for any group of which you are 
 
 Lustre quotas actually manage two separate limits: one for the overall space used and one for the number of files owned. In the example below the Goodman Lab has used only 3.8 TB out of its 10 TB quota; the group owns 25,697 files, well under its quota of 900,000.
 
-```
+``` sh
 [exahead1 ~]$ lfs quota -h -g GoodmanLab /home/exacloud/lustre1
+
 Disk quotas for group GoodmanLab (gid 3155):
-     Filesystem    used   quota   limit   grace   files   quota   limit   grace
-/home/exacloud/lustre1
-                  3.85T     10T     11T       -   25697  900000 1000000       -
+     Filesystem    used   quota   limit   grace   files   quota   limit   grace /home/exacloud/lustre1
+                  3.85T     10T     11T       -   25697  900000 1000000      -
 
 ```
 

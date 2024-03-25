@@ -15,12 +15,13 @@ X11 forwarding works out-of-the-box with the built-in ssh client on Mac OS X and
 
 Make an ssh connection with X11 forwarding enabled and then launch a graphical application with srun:
 
-```
+``` sh
 $ ssh -Y exahead1.ohsu.edu
 $ srun -t 3:00:00 /path/to/gui/application
 ```
+
 Or if you just want to run Firefox:
-```
+``` sh
 $ ssh -Y exalogin.ohsu.edu
 user@exalogin-el7 $ /usr/bin/firefox
 ```
@@ -36,7 +37,7 @@ Once logged in to a headnode  or exalogin with X11 forwarding enabled, the proc
 
 ### To run on a node
 
-```
+``` sh
 $ srun -t 3:00:00 /path/to/gui/application
 # Or to run on exalogin:
 $ /usr/bin/firefox
