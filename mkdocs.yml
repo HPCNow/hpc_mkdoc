@@ -11,12 +11,23 @@ nav:
   - Exacloud Platform:
     - What is Exacloud?: exacloud/00-exacloud.md 
     - Basic Access: exacloud/01-basic-access.md
-    - FAQ: exacloud/02-exacloud-FAQ.md
-    - Policy: exacloud/03-excloud-Policy.md
+    - FAQ: exacloud/02-FAQ.md
+    - Policy: exacloud/03-Policy.md
     - Exacloud User Guie:
-      - Introduction: exacloud/04-exacloud-Introduction.md
-      - Job Scheduler: exacloud/05-exacloud-Job-Scheduler.md
+      - Introduction: exacloud/04-Introduction.md
+      - Job Scheduler: exacloud/05-Job-Scheduler.md
       - Parallel Computation: exacloud/05-Parallel-Computation.md
+      - Storage: exacloud/06-Storage.md
+      - Singularity: exacloud/07-Singularity.md
+      - GPU: exacloud/08-GPU.md
+      - Graphical Applications: exacloud/09-Graphical-Applications.md
+      - Group File Ownership: exacloud/10-Group-File-Ownership.md
+      - Jupyter: exacloud/11-Jupyter.md
+      - Modules: exacloud/12-Modules.md
+      - MPI: exacloud/13-MPI.md
+      - Perl Tips: exacloud/14-Perl-Tips.md
+      - Docker: exacloud/15-Docker.md
+      - Troubleshooting: exacloud/16-Troubleshooting.md
     
 markdown_extensions:
   - admonition
