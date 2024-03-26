@@ -32,4 +32,4 @@ To create a point-to-point tunnel:
 9.  Point your browser (or other application, as appropriate) to `localhost:8080` to connect
 10. When done, close the Putty window.
 
-![Putty](../images/Putty-Config.png){ align=right }
+![Putty](../images/Putty-Config.png)

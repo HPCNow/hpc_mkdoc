@@ -1,11 +1,5 @@
 site_name: OHSU - Advance Computing Center
-theme:
-  name: material
-  pelette:
-    primary: green
-  features:
-#    - toc.integrate
-    - navigation.expand
+
 nav:
   - Home: index.md     
   - Exacloud Platform:
@@ -55,6 +49,19 @@ nav:
     - Red Hat/CentOS Software Collections (SCL): how-to/04-Red-Hat-CentOS-Software-Collections-(SCL).md
     - Using ProxyJump with SSH and SCP: how-to/05-Using-ProxyJumpith-SSH-and-SCP.md
     - Windows SSH Tunneling: how-to/06-Windows-SSH-Tunneling.md
+
+theme:
+  name: material
+  logo: images/logo-ohsu.png
+  favicon: images/ohsu.ico
+  palette:
+    scheme: ohsu
+  features:
+#    - toc.integrate
+    - navigation.expand
+extra_css:
+  - stylesheets/extra.css
+
 markdown_extensions:
   - admonition
   - pymdownx.details
