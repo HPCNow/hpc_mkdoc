@@ -42,11 +42,27 @@ nav:
     - Launch a Virtual Machine: exastack/03-Launch-a-Virtual-Machine.md
     - Security Groups: exastack/04-Security-Groups.md
     - VM Configuration with Cloud-Init: exastack/05-VM-Configuration-with-Cloud-Init.md
-
+  - General:
+    - DUO: general/00-Duo.md
+    - Remote SSH Access: general/01-Remote-SSH-Access.md
+  - Globus:
+    - Introduction: globus/00-Introduction.md
+  - How to:
+    - ACC Objects Storage: how-to/00-ACC-Objects-Storage.md
+    - ACC Remote Access: how-to/01-ACC-Remote-Access.md
+    - Changing Your Unix Group ID: how-to/02-Changing-Your-Unix-Group-ID.md
+    - Configuring umask: how-to/03-Configuring-umask.md
+    - Red Hat/CentOS Software Collections (SCL): how-to/04-Red-Hat-CentOS-Software-Collections-(SCL).md
+    - Using ProxyJump with SSH and SCP: how-to/05-Using-ProxyJumpith-SSH-and-SCP.md
+    - Windows SSH Tunneling: how-to/06-Windows-SSH-Tunneling.md
 markdown_extensions:
   - admonition
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true  
   - attr_list
