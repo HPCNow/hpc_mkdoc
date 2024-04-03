@@ -1,5 +1,6 @@
 site_name: OHSU - Advance Computing Center
 
+# Navigation
 nav:
   - Home: index.md     
   - Exacloud Platform:
@@ -50,18 +51,31 @@ nav:
     - Using ProxyJump with SSH and SCP: how-to/05-Using-ProxyJumpith-SSH-and-SCP.md
     - Windows SSH Tunneling: how-to/06-Windows-SSH-Tunneling.md
 
+
+#Configuration
 theme:
   name: material
   logo: images/logo-ohsu.png
   favicon: images/ohsu.ico
   palette:
-    scheme: ohsu
+    - scheme: ohsu
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    
+    - scheme: ohsu
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+
   features:
 #    - toc.integrate
     - navigation.expand
 extra_css:
   - stylesheets/extra.css
 
+
+#Extension
 markdown_extensions:
   - admonition
   - pymdownx.details
@@ -77,5 +91,7 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
 
+#Plugins
 plugins:
   - macros
+  - search
